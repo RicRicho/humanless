@@ -3,4 +3,5 @@
 > Humanless tests whether AI agents can find a product, sign up and finish real work, and verifies the end state independently.
 
 ## Offer
-- [Agent-readiness pilot (markdown)](pilot/index.md): A$4,500 fixed, up to 3 workflows, 10 business days, 50% deposit, fee credited against a A$25,000–50,000 implementation signed within 60 days. Contact miles@mail.ricricho.com.
+- [Agent-readiness pilot (markdown)](https://humanless.tools/pilot/index.md): A$4,500 fixed, up to 3 workflows, 10 business days, 50% deposit, fee credited against a A$25,000–50,000 implementation signed within 60 days. Contact miles@mail.ricricho.com.
+- [Agent-readiness pilot (web page)](https://humanless.tools/pilot/): the same offer as a web page.
