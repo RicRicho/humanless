@@ -51,4 +51,6 @@ Days 1–2: kickoff, pick workflows, set up test accounts. Days 3–7: runs and 
 
 Reply with your product and up to three workflows you want tested. We'll send a short order form and the deposit invoice the same day. A free sample audit is available on request.
 
+See a real run: [live-agent demo, 9 Oct 2026](https://humanless.tools/evidence/2026-10-09-live-agent-demo/). An AI agent got a working Neon database with no human, and our separate checker confirmed it.
+
 **Miles Mercer, Humanless** · miles@mail.ricricho.com

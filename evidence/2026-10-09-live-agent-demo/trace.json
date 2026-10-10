@@ -1,0 +1,332 @@
+{
+  "title": "Humanless live-agent demo: Neon (claimable Postgres), 9 Oct 2026",
+  "operator": "Miles Mercer (Humanless) - miles@mail.ricricho.com",
+  "agent": {
+    "name": "Grok Bot, running as Miles's operator agent",
+    "mode": "live AI agent session on a Linux box; each step was chosen during the run from the public pages fetched in that run, not replayed from a prepared script",
+    "tools": [
+      "curl",
+      "Python 3.13",
+      "Node 20 with @neondatabase/serverless 1.2.0"
+    ],
+    "starting_knowledge": "product name 'Neon' and the goal only"
+  },
+  "product": "Neon (neon.com) - claimable Postgres, no account",
+  "cost_aud": 0,
+  "human_steps": 0,
+  "accounts_created": 0,
+  "resources": {
+    "main_project": "restless-art-50105333 (unclaimed; Neon removes it automatically 12 Oct 2026 10:08 pm AEDT)",
+    "negative_control_project": "sweet-glitter-33328649 (unclaimed; removed automatically 12 Oct 2026 10:10 pm AEDT)"
+  },
+  "expected_end_state": {
+    "table": "humanless_demo_orders",
+    "nonce": "hl-d1df48a8",
+    "rows": [
+      [
+        1,
+        "hl-d1df48a8",
+        "Acme Pty Ltd",
+        "pilot",
+        4500.0
+      ],
+      [
+        2,
+        "hl-d1df48a8",
+        "Birch Labs",
+        "pilot",
+        4500.0
+      ],
+      [
+        3,
+        "hl-d1df48a8",
+        "Cobalt AI",
+        "implementation",
+        25000.0
+      ],
+      [
+        4,
+        "hl-d1df48a8",
+        "Dune Systems",
+        "pilot",
+        4500.0
+      ],
+      [
+        5,
+        "hl-d1df48a8",
+        "Ember Tools",
+        "implementation",
+        50000.0
+      ]
+    ],
+    "expected_query": "SELECT kind, count(*), sum(amount_aud) FROM humanless_demo_orders GROUP BY kind ORDER BY kind",
+    "expected_query_result": [
+      [
+        "implementation",
+        2,
+        75000.0
+      ],
+      [
+        "pilot",
+        3,
+        13500.0
+      ]
+    ]
+  },
+  "steps": [
+    {
+      "utc": "2026-10-09T11:08:12+00:00",
+      "sydney": "2026-10-09 22:08:12 AEDT",
+      "phase": "setup",
+      "action": "start",
+      "note": "Agent (Grok Bot, acting for Miles) given only the product name 'Neon' and the goal: get a working Postgres database with no human, A$0, then store and query known rows. Discovery restricted to public pages fetched live in this run."
+    },
+    {
+      "utc": "2026-10-09T11:08:18+00:00",
+      "sydney": "2026-10-09 22:08:18 AEDT",
+      "phase": "discover",
+      "action": "fetch_llms_txt",
+      "note": "GET https://neon.com/llms.txt -> 200 (41,280 bytes). Line 5 says: if the user cannot create an account, follow 'Claimable Neon' at https://neon.com/auth.md to provision Postgres without signup; a human claims it later. Chose this path (no human, no account, A$0).",
+      "data": {
+        "url": "https://neon.com/llms.txt",
+        "http": 200,
+        "bytes": 41280
+      }
+    },
+    {
+      "utc": "2026-10-09T11:08:26+00:00",
+      "sydney": "2026-10-09 22:08:26 AEDT",
+      "phase": "discover",
+      "action": "read_auth_md",
+      "note": "GET https://neon.com/auth.md -> 200 (5,150 bytes). Checked preconditions it lists: NEON_API_KEY not set, 'neon' CLI not on PATH, so no existing account. Doc offers CLI or REST; chose the REST path (3 calls: register anonymous identity -> exchange for token -> fetch credentials) to avoid installing global packages on a shared machine. Requesting only the 'postgres' capability because that's all the task needs.",
+      "data": {
+        "url": "https://neon.com/auth.md",
+        "http": 200,
+        "bytes": 5150,
+        "neon_api_key_present": false,
+        "neon_cli_on_path": false,
+        "chosen_path": "REST"
+      }
+    },
+    {
+      "utc": "2026-10-09T11:08:39+00:00",
+      "sydney": "2026-10-09 22:08:39 AEDT",
+      "phase": "access",
+      "action": "register_identity",
+      "note": "POST https://claimable.neon.tech/v1/agent/identity (anonymous, postgres only) -> HTTP 201. Got project restless-art-50105333; postgres capability granted=true; project expires 2026-10-12 10:08 pm AEDT unless a human claims it. Identity secret stored in a private file, not shown.",
+      "data": {
+        "http": 201,
+        "project_id": "restless-art-50105333",
+        "expires_at_utc": "2026-10-12T11:08:31.203Z",
+        "capabilities": [
+          {
+            "capability": "postgres",
+            "granted": true
+          }
+        ]
+      }
+    },
+    {
+      "utc": "2026-10-09T11:08:47+00:00",
+      "sydney": "2026-10-09 22:08:47 AEDT",
+      "phase": "access",
+      "action": "get_credentials",
+      "note": "POST /v1/oauth2/token -> HTTP 200 (Bearer token, valid 3600 s). GET /v1/projects/restless-art-50105333/credentials -> HTTP 200 with a Postgres connection string (host *.aws.neon.tech, database neondb). Access obtained with no account, no human, no card. Credentials kept in a private file; never printed.",
+      "data": {
+        "token_http": 200,
+        "token_expires_in_s": 3600,
+        "credentials_http": 200,
+        "db_host_suffix": "aws.neon.tech",
+        "database": "neondb"
+      }
+    },
+    {
+      "utc": "2026-10-09T11:08:51+00:00",
+      "sydney": "2026-10-09 22:08:51 AEDT",
+      "phase": "work",
+      "action": "plan",
+      "note": "Expected end state written to expected.json BEFORE doing the work: table humanless_demo_orders with 5 known rows tagged with run tag hl-d1df48a8, plus an expected summary query result (implementation: 2 rows, A$75,000; pilot: 3 rows, A$13,500).",
+      "data": {
+        "expected_file": "expected.json",
+        "run_tag": "hl-d1df48a8"
+      }
+    },
+    {
+      "utc": "2026-10-09T11:09:46+00:00",
+      "sydney": "2026-10-09 22:09:46 AEDT",
+      "phase": "work",
+      "action": "connect_attempt_1",
+      "note": "Tried a standard Postgres connection (port 5432) to do the work: timed out after 30 s. Network check: port 5432 to the database host is blocked from this machine, port 443 (HTTPS) is open. Nothing was written. Agent looks for an HTTPS route in Neon's public docs.",
+      "data": {
+        "port_5432": "blocked/timeout",
+        "port_443": "open"
+      }
+    },
+    {
+      "utc": "2026-10-09T11:09:54+00:00",
+      "sydney": "2026-10-09 22:09:54 AEDT",
+      "phase": "work",
+      "action": "choose_https_route",
+      "note": "GET https://neon.com/docs/connect/choose-connection.md -> 200. Docs say the Neon serverless driver (@neondatabase/serverless) connects over HTTP/WebSocket instead of TCP. Agent switches to that driver over HTTPS (port 443), installed locally in the demo folder from the public npm registry (free).",
+      "data": {
+        "url": "https://neon.com/docs/connect/choose-connection.md",
+        "http": 200
+      }
+    },
+    {
+      "utc": "2026-10-09T11:10:05+00:00",
+      "sydney": "2026-10-09 22:10:05 AEDT",
+      "phase": "work",
+      "action": "do_work",
+      "note": "Over HTTPS (Neon serverless driver 1.2.0, Node 20): created table humanless_demo_orders, inserted the 5 known rows, ran the summary query. Agent's own claim: implementation 2 rows / A$75,000; pilot 3 rows / A$13,500. Server: PostgreSQL 17.11. (This is only the agent's claim; it is checked separately below.)",
+      "data": {
+        "agent_claim": "created table humanless_demo_orders, inserted 5 rows, ran summary query",
+        "summary_query_result": [
+          [
+            "implementation",
+            2,
+            75000
+          ],
+          [
+            "pilot",
+            3,
+            13500
+          ]
+        ],
+        "server": "PostgreSQL 17.11 (7d7ea2a) on aarch64-unknown-linux-gnu"
+      }
+    },
+    {
+      "utc": "2026-10-09T11:10:13+00:00",
+      "sydney": "2026-10-09 22:10:13 AEDT",
+      "phase": "verify",
+      "action": "check_main",
+      "note": "MAIN: agent's database: PASS (rows, hash and summary match expected)",
+      "data": {
+        "label": "MAIN: agent's database",
+        "checked_utc": "2026-10-09T11:10:13+00:00",
+        "checked_sydney": "2026-10-09 22:10:13 AEDT",
+        "expected_table": "humanless_demo_orders",
+        "expected_row_count": 5,
+        "expected_sha256": "6373f1e480439afb876c04a08fefd2251209335090f341db30bc165695e89e8d",
+        "project_id": "restless-art-50105333",
+        "fresh_token_http": 200,
+        "fresh_credentials_http": 200,
+        "sql_http": 200,
+        "row_count": 5,
+        "sha256": "6373f1e480439afb876c04a08fefd2251209335090f341db30bc165695e89e8d",
+        "summary_query_result": [
+          [
+            "implementation",
+            2,
+            75000.0
+          ],
+          [
+            "pilot",
+            3,
+            13500.0
+          ]
+        ],
+        "verdict": "PASS",
+        "reason": "rows, hash and summary match expected"
+      }
+    },
+    {
+      "utc": "2026-10-09T11:10:21+00:00",
+      "sydney": "2026-10-09 22:10:21 AEDT",
+      "phase": "verify",
+      "action": "check_neg_wrongpw",
+      "note": "NEGATIVE 1: same database, wrong password: FAIL (database refused or table missing: password authentication failed for user 'neondb_owner')",
+      "data": {
+        "label": "NEGATIVE 1: same database, wrong password",
+        "checked_utc": "2026-10-09T11:10:21+00:00",
+        "checked_sydney": "2026-10-09 22:10:21 AEDT",
+        "expected_table": "humanless_demo_orders",
+        "expected_row_count": 5,
+        "expected_sha256": "6373f1e480439afb876c04a08fefd2251209335090f341db30bc165695e89e8d",
+        "project_id": "restless-art-50105333",
+        "fresh_token_http": 200,
+        "fresh_credentials_http": 200,
+        "mutation": "password replaced with a wrong value",
+        "sql_http": 400,
+        "verdict": "FAIL",
+        "reason": "database refused or table missing: password authentication failed for user 'neondb_owner'",
+        "row_count": 0
+      }
+    },
+    {
+      "utc": "2026-10-09T11:10:28+00:00",
+      "sydney": "2026-10-09 22:10:28 AEDT",
+      "phase": "verify",
+      "action": "check_neg_emptydb",
+      "note": "NEGATIVE 2: fresh empty database, correct credentials: FAIL (database refused or table missing: relation \"humanless_demo_orders\" does not exist)",
+      "data": {
+        "label": "NEGATIVE 2: fresh empty database, correct credentials",
+        "checked_utc": "2026-10-09T11:10:28+00:00",
+        "checked_sydney": "2026-10-09 22:10:28 AEDT",
+        "expected_table": "humanless_demo_orders",
+        "expected_row_count": 5,
+        "expected_sha256": "6373f1e480439afb876c04a08fefd2251209335090f341db30bc165695e89e8d",
+        "project_id": "sweet-glitter-33328649",
+        "fresh_token_http": 200,
+        "fresh_credentials_http": 200,
+        "sql_http": 400,
+        "verdict": "FAIL",
+        "reason": "database refused or table missing: relation \"humanless_demo_orders\" does not exist",
+        "row_count": 0
+      }
+    },
+    {
+      "utc": "2026-10-09T11:10:41+00:00",
+      "sydney": "2026-10-09 22:10:41 AEDT",
+      "phase": "verify",
+      "action": "check_neg_tampered",
+      "note": "NEGATIVE 3: look-alike table, 5 rows, one amount wrong: FAIL (rows differ from expected)",
+      "data": {
+        "label": "NEGATIVE 3: look-alike table, 5 rows, one amount wrong",
+        "checked_utc": "2026-10-09T11:10:41+00:00",
+        "checked_sydney": "2026-10-09 22:10:41 AEDT",
+        "expected_table": "humanless_demo_orders",
+        "expected_row_count": 5,
+        "expected_sha256": "6373f1e480439afb876c04a08fefd2251209335090f341db30bc165695e89e8d",
+        "project_id": "sweet-glitter-33328649",
+        "fresh_token_http": 200,
+        "fresh_credentials_http": 200,
+        "sql_http": 200,
+        "row_count": 5,
+        "sha256": "edb6e91da998556340775aa80311703343b6959077fa49d6deb37774f72d48d3",
+        "summary_query_result": [
+          [
+            "implementation",
+            2,
+            75000.0
+          ],
+          [
+            "pilot",
+            3,
+            13000.0
+          ]
+        ],
+        "verdict": "FAIL",
+        "reason": "rows differ from expected"
+      }
+    }
+  ],
+  "result": {
+    "main_check": "PASS",
+    "negative_controls": [
+      "wrong password: FAIL",
+      "fresh empty database: FAIL",
+      "look-alike table with one wrong amount: FAIL"
+    ],
+    "expected_sha256": "6373f1e480439afb876c04a08fefd2251209335090f341db30bc165695e89e8d",
+    "rows_verified": 5
+  },
+  "honest_notes": [
+    "First attempt to reach the database over the standard Postgres port timed out because this machine's network blocks that port; the agent found Neon's HTTPS route in Neon's docs and used that instead.",
+    "The agent's own report (step do_work) is not treated as proof; only the separate checker's verdicts are.",
+    "The checker is a separate Python program that shares no code with the agent and fetches its own fresh login from Neon before reading the data.",
+    "The language model behind the agent already knows public facts about Neon; the trace shows which public pages it actually read in this run.",
+    "All passwords, tokens and connection strings are left out of this trace."
+  ]
+}

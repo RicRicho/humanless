@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live-agent demo: an AI agent gets a working Neon database on its own | Humanless</title>
+<meta name="description" content="9 Oct 2026: an AI agent found Neon's no-sign-up route, got a database, did real work, and a separate checker confirmed it. Three must-fail tests all failed.">
+<link rel="canonical" href="https://humanless.tools/evidence/2026-10-09-live-agent-demo/">
+<style>
+:root{--ink:#16202a;--muted:#55636f;--accent:#0b3d5c;--line:#d6e0e7;--bg:#fff;--soft:#f3f7fa}
+*{box-sizing:border-box}
+body{margin:0;font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--bg)}
+main{max-width:760px;margin:0 auto;padding:40px 22px 64px}
+.brand{font-weight:700;letter-spacing:.02em;color:var(--accent);text-transform:uppercase;font-size:13px}
+h1{font-size:34px;line-height:1.2;margin:8px 0 12px;color:var(--accent)}
+.lede{font-size:20px;color:#2b3640;margin:0 0 22px}
+h2{font-size:22px;margin:36px 0 8px;color:var(--accent);border-bottom:1px solid var(--line);padding-bottom:4px}
+ul,ol{padding-left:22px}li{margin:6px 0}
+.price{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:22px 0}
+.price strong.big{font-size:28px;color:var(--accent);display:block}
+.cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;margin-top:8px}
+.cta:hover{background:#082d44}
+a{color:var(--accent)}
+footer{margin-top:44px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:520px){h1{font-size:28px}.lede{font-size:18px}body{font-size:16px}}
+</style>
+<style>table{border-collapse:collapse;width:100%;font-size:14px}td{border-top:1px solid var(--line);padding:6px;vertical-align:top}.pass{color:#11703a;font-weight:700}.fail{color:#a32020;font-weight:700}</style>
+</head><body><main>
+<div class="brand">Humanless · evidence</div>
+<h1>Can an AI agent get a working database from Neon, with no human?</h1>
+<p class="lede">Yes. On Friday 9 Oct 2026 (10:08–10:10 pm Sydney time) an AI agent went from just the name “Neon” to a working database with real records in it. A separate checker confirmed the result, and three tests built to fail all failed.</p>
+
+<div class="price"><strong>Result:</strong> independent check <span class="pass">PASS</span> · 3 of 3 must-fail tests <span class="fail">FAIL</span> as expected<br>Cost A$0 · no sign-up · no card · no person involved</div>
+
+<h2>Who the agent was (please read)</h2>
+<p>The agent was <strong>Miles Mercer’s own live AI session</strong>, logged step by step as it ran. It was not a separate AI product running unattended. It chose each step during the run, using the public Neon pages it fetched. The AI behind it already knows some public facts about Neon, so the log lists which pages it actually read. This differs from our earlier <em>scripted</em> Neon sample of 6 Oct.</p>
+
+<h2>What the agent did</h2>
+<ol>
+<li><strong>Found the way in (10:08 pm).</strong> It read Neon’s public guide for AI agents (<a href="https://neon.com/llms.txt">neon.com/llms.txt</a>). That guide points agents with no account to a no-sign-up “claimable” database (<a href="https://neon.com/auth.md">neon.com/auth.md</a>).</li>
+<li><strong>Got access (10:08 pm).</strong> Neon gave it a new database straight away. Neon removes it after 72 hours unless someone claims it.</li>
+<li><strong>Hit a snag and worked around it (10:09 pm).</strong> Our machine’s network blocked the usual database connection. The agent went back to Neon’s docs and switched to Neon’s web-based connection.</li>
+<li><strong>Did the work (10:10 pm).</strong> It created an orders table, added 5 records we had written down in advance, and ran a summary: 3 pilots worth A$13,500 and 2 implementations worth A$75,000.</li>
+</ol>
+
+<h2>How we checked it (not the agent’s word for it)</h2>
+<p>A separate checking program, sharing no code with the agent, got its own fresh login from Neon, read the table and compared a fingerprint of the records with the list written down before the work started.</p>
+<ul>
+<li>Agent’s database: <span class="pass">PASS</span> (10:10:13 pm). All 5 records and the summary matched. Fingerprint <code>6373f1e4…e89e8d</code>.</li>
+<li>Wrong password: <span class="fail">FAIL</span> (10:10:21 pm). The login was refused.</li>
+<li>A brand-new empty Neon database: <span class="fail">FAIL</span> (10:10:28 pm). The table wasn’t there.</li>
+<li>A look-alike table with one amount changed (A$4,000 instead of A$4,500): <span class="fail">FAIL</span> (10:10:41 pm). The fingerprint didn’t match.</li>
+</ul>
+<p>The three failures show the checker doesn’t just approve whatever it’s pointed at.</p>
+
+<h2>Step-by-step log (Sydney time)</h2>
+<table><tr><td>22:08</td><td>setup</td><td>Agent (Grok Bot, acting for Miles) given only the product name 'Neon' and the goal: get a working Postgres database with no human, A$0, then store and query known rows. Discovery restricted to public pages fetched live in this run.</td></tr><tr><td>22:08</td><td>discover</td><td>GET https://neon.com/llms.txt -> 200 (41,280 bytes). Line 5 says: if the user cannot create an account, follow 'Claimable Neon' at https://neon.com/auth.md to provision Postgres without signup; a human claims it later. Chose this path (no human, no account, A$0).</td></tr><tr><td>22:08</td><td>discover</td><td>GET https://neon.com/auth.md -> 200 (5,150 bytes). Checked preconditions it lists: NEON_API_KEY not set, 'neon' CLI not on PATH, so no existing account. Doc offers CLI or REST; chose the REST path (3 calls: register anonymous identity -> exchange for token -> fetch credentials) to avoid installing global packages on a shared machine. Requesting only the 'postgres' capability because that's all the task needs.</td></tr><tr><td>22:08</td><td>access</td><td>POST https://claimable.neon.tech/v1/agent/identity (anonymous, postgres only) -> HTTP 201. Got project restless-art-50105333; postgres capability granted=true; project expires 2026-10-12 10:08 pm AEDT unless a human claims it. Identity secret stored in a private file, not shown.</td></tr><tr><td>22:08</td><td>access</td><td>POST /v1/oauth2/token -> HTTP 200 (Bearer token, valid 3600 s). GET /v1/projects/restless-art-50105333/credentials -> HTTP 200 with a Postgres connection string (host *.aws.neon.tech, database neondb). Access obtained with no account, no human, no card. Credentials kept in a private file; never printed.</td></tr><tr><td>22:08</td><td>work</td><td>Expected end state written to expected.json BEFORE doing the work: table humanless_demo_orders with 5 known rows tagged with run tag hl-d1df48a8, plus an expected summary query result (implementation: 2 rows, A$75,000; pilot: 3 rows, A$13,500).</td></tr><tr><td>22:09</td><td>work</td><td>Tried a standard Postgres connection (port 5432) to do the work: timed out after 30 s. Network check: port 5432 to the database host is blocked from this machine, port 443 (HTTPS) is open. Nothing was written. Agent looks for an HTTPS route in Neon's public docs.</td></tr><tr><td>22:09</td><td>work</td><td>GET https://neon.com/docs/connect/choose-connection.md -> 200. Docs say the Neon serverless driver (@neondatabase/serverless) connects over HTTP/WebSocket instead of TCP. Agent switches to that driver over HTTPS (port 443), installed locally in the demo folder from the public npm registry (free).</td></tr><tr><td>22:10</td><td>work</td><td>Over HTTPS (Neon serverless driver 1.2.0, Node 20): created table humanless_demo_orders, inserted the 5 known rows, ran the summary query. Agent's own claim: implementation 2 rows / A$75,000; pilot 3 rows / A$13,500. Server: PostgreSQL 17.11. (This is only the agent's claim; it is checked separately below.)</td></tr><tr><td>22:10</td><td>verify</td><td>MAIN: agent's database: PASS (rows, hash and summary match expected)</td></tr><tr><td>22:10</td><td>verify</td><td>NEGATIVE 1: same database, wrong password: FAIL (database refused or table missing: password authentication failed for user 'neondb_owner')</td></tr><tr><td>22:10</td><td>verify</td><td>NEGATIVE 2: fresh empty database, correct credentials: FAIL (database refused or table missing: relation "humanless_demo_orders" does not exist)</td></tr><tr><td>22:10</td><td>verify</td><td>NEGATIVE 3: look-alike table, 5 rows, one amount wrong: FAIL (rows differ from expected)</td></tr></table>
+
+<h2>Files</h2>
+<ul>
+<li><a href="trace.json">trace.json</a>: the full timed log</li>
+<li><a href="checks.json">checks.json</a>: the checker’s four results</li>
+<li><a href="expected.json">expected.json</a>: the records written down before the work</li>
+<li><a href="checker.py">checker.py</a> and <a href="agent_work.mjs">agent_work.mjs</a>: the checker and the agent’s work step</li>
+</ul>
+<p>All passwords, tokens and connection details have been removed. The two test databases were temporary, and Neon removes them automatically on 12 Oct 2026.</p>
+
+<h2>Want this for your product?</h2>
+<p>We run the same test on your sign-up and core workflows. See the <a href="/pilot/">A$4,500 agent-readiness pilot</a>.</p>
+<p><a class="cta" href="mailto:miles@mail.ricricho.com?subject=Humanless%20agent-readiness%20pilot">Email miles@mail.ricricho.com</a></p>
+<footer><strong>Miles Mercer, Humanless</strong> · <a href="mailto:miles@mail.ricricho.com">miles@mail.ricricho.com</a></footer>
+</main></body></html>

@@ -1,0 +1,8 @@
+{"table":"humanless_demo_orders","nonce":"hl-d1df48a8","rows":[
+ [1,"hl-d1df48a8","Acme Pty Ltd","pilot",4500.00],
+ [2,"hl-d1df48a8","Birch Labs","pilot",4500.00],
+ [3,"hl-d1df48a8","Cobalt AI","implementation",25000.00],
+ [4,"hl-d1df48a8","Dune Systems","pilot",4500.00],
+ [5,"hl-d1df48a8","Ember Tools","implementation",50000.00]],
+ "expected_query":"SELECT kind, count(*), sum(amount_aud) FROM humanless_demo_orders GROUP BY kind ORDER BY kind",
+ "expected_query_result":[["implementation",2,75000.00],["pilot",3,13500.00]]}
